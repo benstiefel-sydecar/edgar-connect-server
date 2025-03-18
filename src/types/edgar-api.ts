@@ -11,6 +11,13 @@ export interface AuthTokens {
   userApiToken: string;
 }
 
+export interface TestEdgarStatus {
+    tracking: string,
+    locator: string,
+    message: string,
+    condition: string
+}
+
 export interface DraftSubmission {
   submissionID: string;
   formType: string;

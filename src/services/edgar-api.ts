@@ -1,5 +1,5 @@
 
-import { AuthTokens, ApiResponse, DraftSubmission, Filing, Filer, FormTypeVersion, UploadResult, ValidationResult, EdgarCredentials } from "@/types/edgar-api";
+import { AuthTokens, ApiResponse, DraftSubmission, Filing, Filer, FormTypeVersion, UploadResult, ValidationResult, EdgarCredentials, TestEdgarStatus } from "@/types/edgar-api";
 
 const API_BASE_URL = "https://api-bravo.edgarfiling.sec.gov/";
 
@@ -109,6 +109,20 @@ class EdgarApiService {
         success: false,
         error: error instanceof Error ? error.message : 'Unknown error occurred'
       };
+    }
+  }
+
+  async getStatus(): Promise<ApiResponse<TestEdgarStatus>> {
+    try {
+      const response = await fetch(`${API_BASE_URL}status`, { method: 'GET'});
+
+      if(response.ok) {
+        const responseMessage = await response.json() as TestEdgarStatus;
+
+        return { success: true, data: responseMessage }
+      }
+    } catch (error) {
+      throw new Error("Edgar is down. Error code: ");
     }
   }
 

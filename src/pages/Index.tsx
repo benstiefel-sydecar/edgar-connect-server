@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useEdgarApi } from '@/contexts/EdgarApiContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,10 +8,17 @@ import CredentialsForm from '@/components/auth/CredentialsForm';
 import TokenForm from '@/components/auth/TokenForm';
 import { Link } from 'react-router-dom';
 import { FileText, Database, ServerCog, ArrowRight } from 'lucide-react';
+import edgarApi from '@/services/edgar-api';
 
 const Index = () => {
   const { isAuthenticated, isLoading } = useEdgarApi();
 
+  var edgarStatus = null;
+  function testEdgarStatus() {
+    edgarStatus = edgarApi.getStatus();
+    console.log('got status');
+  }
+  
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -27,6 +34,16 @@ const Index = () => {
           <h1 className="text-4xl font-bold text-center mb-4 animate-fade-in">EDGAR Connect</h1>
           <p className="text-xl text-muted-foreground text-center max-w-2xl animate-fade-in delay-100">
             A modern service layer for interacting with the SEC EDGAR Filing API
+          </p>
+        </div>
+
+        <div className="flex flex-col items-center justify-center mb-10">
+          <h1 className="text-4xl font-bold text-center mb-4 animate-fade-in">Test EDGAR Status</h1>
+          <p className="text-xl text-muted-foreground text-center max-w-2xl animate-fade-in delay-100">
+            <Button type="button" className="w-full" onClick={testEdgarStatus}>
+              Test Edgar Status
+            </Button>
+            {edgarStatus !== null ? `The status is: ${edgarStatus}` : ''}
           </p>
         </div>
 
@@ -64,7 +81,7 @@ const Index = () => {
               </CardContent>
               <CardFooter>
                 <a 
-                  href="https://www.sec.gov/edgar/filer-information/current-edgar-technical-specifications" 
+                  href="https://www.sec.gov/submit-filings/filer-support-resources/how-do-i-guides/enroll-edgar-next" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-primary hover:underline inline-flex items-center"

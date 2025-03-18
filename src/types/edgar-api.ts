@@ -80,3 +80,6 @@ export interface EdgarCredentials {
   clientID: string;
   clientSecret: string;
 }
+
+// Add Badge variant types to fix the other error
+export type BadgeVariant = "default" | "secondary" | "destructive" | "outline" | "success" | "warning";

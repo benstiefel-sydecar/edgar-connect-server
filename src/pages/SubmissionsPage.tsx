@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { useEdgarApi } from '@/contexts/EdgarApiContext';
 import edgarApi from '@/services/edgar-api';
-import { DraftSubmission } from '@/types/edgar-api';
+import { DraftSubmission, BadgeVariant } from '@/types/edgar-api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -22,7 +22,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/components/ui/custom-badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
 import { FileText, MoreHorizontal, Search, Plus } from 'lucide-react';
@@ -60,11 +60,10 @@ const SubmissionsPage = () => {
   });
 
   const handleCreateSubmission = () => {
-    // This would typically open a dialog to create a new submission
     toast.info('Create submission functionality coming soon!');
   };
 
-  const getStatusBadgeVariant = (status: string) => {
+  const getStatusBadgeVariant = (status: string): BadgeVariant => {
     switch (status.toUpperCase()) {
       case 'DRAFT':
         return 'secondary';
